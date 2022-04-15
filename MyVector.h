@@ -9,27 +9,27 @@ template <class T>
 class MyVector
 {
 public:
-	MyVector(const char* el = NULL, int maxsz = MAX_SIZE) {
+	MyVector(const T* el = NULL, int maxsz = MAX_SIZE) {
 		maxsize = maxsz;
-		pdata = new char* [maxsize];
+		pdata = new T* [maxsize];
 		size = 0;
-		pdata[0] = new char[20];
+		pdata[0] = new T[20];
 		if (el != NULL) {
-			strcpy(pdata[0], el);
+			pdata[0] = el;
 			size++;
 		}
 	}
 
 	MyVector(MyVector& v) {
 		maxsize = v.size * 2;
-		pdata = new char* [maxsize];
+		pdata = new T* [maxsize];
 		size = 0;
 		for (int i = 0; i < v.size; i++) {
-			pdata[i] = new char[20];
+			pdata[i] = new T[20];
 		}
-		
+		text[j]
 		for (int i = 0; i < v.size; i++) {
-			for (int j = 0; j < strlen(v.pdata[i]) + 1; j++) {
+			for (int j = 0; v.pdata[j]; j++) {
 				pdata[i][j] = v.pdata[i][j];
 			}
 			size++;
@@ -43,8 +43,8 @@ public:
 	}
 
 	void add_element(const T el) {
-		pdata[size] = new char(strlen(el) + 1);
-		strcpy(pdata[size], el);
+		pdata[size] = new T[20];
+		pdata[size] = el;
 		size++;
 		resize();
 	}
@@ -66,14 +66,14 @@ public:
 		}
 	}
 
-	char* operator[](int i) {
+	T* operator[](int i) {
 		return pdata[i];
 	}
 
 	void sort() {
 		for (int i = 0; i < size - 1; i++) {
 			for (int j = i + 1; j < size; j++) {
-				if (strcmp(pdata[i], pdata[j]) < 0) {
+				if (pdata[i] > pdata[j]) {
 					swap(pdata[i], pdata[j]);
 				}
 			}
@@ -82,15 +82,18 @@ public:
 
 	int Size() { return size; }
 	int Maxsize() { return maxsize; }
-	int find(char* el) {
+
+	int find(T* el) {
 		int index = - 1;
 		for (int i = 0; i < size; i++) {
-			if (strcmp(pdata[i], el) == 0) {
+			if (pdata[i] ==  el) {
 				index = i;
 			}
 		}
 		return index;
 	}
+
+	
 
 	MyVector& operator=(const MyVector& v) {
 		maxsize = v.maxsize;
@@ -104,10 +107,12 @@ public:
 			
 			size = v.size;
 
-			pdata = new char* [maxsize];
+			pdata = new T* [maxsize];
 			for (int i = 0; i < size; i++) {
-				pdata[i] = new char[strlen(v.pdata[i])+1];
-				strcpy(pdata[i], v.pdata[i]);
+				pdata[i] = new T[20];
+				for (int j = 0; v.pdata[i][j]; j++) {
+					pdata[i][j] = v.pdata[i][j];
+				}
 			}
 		}
 		return *this;
@@ -115,13 +120,14 @@ public:
 
 	friend ostream& operator<<(ostream& out, MyVector& v) {
 		for (int i = 0; i < v.size; i++) {
-			for (int j = 0; j < strlen(v.pdata[i]) + 1; j++) {
+			for (int j = 0; pdata[i][j]; j++) {
 				out << v.pdata[i][j];
 			}
 			out << endl;
 		}
 		return out;
 	}
+
 protected:
 	int maxsize;
 	int size;
@@ -160,7 +166,49 @@ private:
 			pdata = buf;
 		}
 	}
+	int find(char* el);
 };
+
+
+
+
+
+
+//========================================= dlya char*
+
+template <>
+MyVector MyVector<char*>::MyVector(const char* el = NULL, int maxsz = MAX_SIZE) {
+	maxsize = maxsz;
+	pdata = new char* [maxsize];
+	size = 0;
+	pdata[0] = new char[20];
+	if (el != NULL) {
+		strcpy(pdata[0], el);
+		size++;
+	}
+}
+
+template<>
+MyVector MyVector<char*>::MyVector(MyVector& v) {
+	maxsize = v.size * 2;
+	pdata = new char* [maxsize];
+	size = 0;
+	for (int i = 0; i < v.size; i++) {
+		pdata[i] = new char[20];
+	}
+
+	for (int i = 0; i < v.size; i++) {
+		for (int j = 0; j < strlen(v.pdata[i]) + 1; j++) {
+			pdata[i][j] = v.pdata[i][j];
+		}
+		size++;
+	}
+	resize();
+
+}
+
+
+
 
 template <>
 void MyVector<char*>::add_element(char* el) {
@@ -168,6 +216,90 @@ void MyVector<char*>::add_element(char* el) {
 	strcpy(pdata[size], el);
 	size++;
 	resize();
+}
+
+
+template <>
+void MyVector<char*>:: sort() {
+	for (int i = 0; i < size - 1; i++) {
+		for (int j = i + 1; j < size; j++) {
+			if (strcmp(pdata[i], pdata[j]) < 0) {
+				swap(pdata[i], pdata[j]);
+			}
+		}
+	}
+}
+
+
+template <>
+int MyVector<char*>::find(char* el) {
+	int index = -1;
+	for (int i = 0; i < size; i++) {
+		if (strcmp(pdata[i], el) == 0) {
+			index = i;
+		}
+	}
+	return index;
+}
+
+
+template <>
+MyVector& MyVector<char*>::operator=(const MyVector& v) {
+	maxsize = v.maxsize;
+	if (this != &v) {
+
+		for (int i = 0; i < size; i++) {
+			delete[] pdata[i];
+		}
+		delete[] pdata;
+
+
+		size = v.size;
+
+		pdata = new char* [maxsize];
+		for (int i = 0; i < size; i++) {
+			pdata[i] = new char[strlen(v.pdata[i]) + 1];
+			strcpy(pdata[i], v.pdata[i]);
+		}
+	}
+	return *this;
+}
+
+
+
+template <>
+MyVector& MyVector<char*>::operator=(const MyVector& v) {
+	maxsize = v.maxsize;
+	if (this != &v) {
+
+		for (int i = 0; i < size; i++) {
+			delete[] pdata[i];
+		}
+		delete[] pdata;
+
+
+		size = v.size;
+
+		pdata = new T * [maxsize];
+		for (int i = 0; i < size; i++) {
+			pdata[i] = new T[20];
+			for (int j = 0; v.pdata[i][j]; j++) {
+				pdata[i][j] = v.pdata[i][j];
+			}
+		}
+	}
+	return *this;
+}
+
+template <>
+ostream& MyVector<char*>::operator<<(ostream& out, MyVector& v) {
+	for (int i = 0; i < v.size; i++) {
+		for (int j = 0; j < strlen(v.pdata[i]) + 1; j++) {
+			out << v.pdata[i][j];
+		}
+		out << endl;
+	}
+	return out;
 }
 
 
