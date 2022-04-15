@@ -3,10 +3,11 @@
 #include <iostream>
 using namespace std;
 
+template <class T>
 class MySet :public MyVector
 {
 public:
-	MySet(const char* el = NULL) :MyVector(el) {};
+	MySet(const T* el = NULL) :MyVector(el) {};
 
 	
 	friend MySet operator+(MySet& s1, MySet& s2) {
