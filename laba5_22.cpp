@@ -1,5 +1,6 @@
 ﻿
 #include "MyVector.h"
+#include "MySet.h"
 
 
 
@@ -8,7 +9,7 @@ using namespace std;
 int main()
 {
 	setlocale(0, "russian");
-	
+
 	MyVector<int> lol;
 	lol.add_element(10);
 	lol.add_element(7);
@@ -16,6 +17,10 @@ int main()
 	lol.delete_element(7);
 	cout << lol;
 
+	/*MySet<int> hui;
+	MySet<int> pizda;
+	hui.add_element(10);
+	hui.add_element(8);*/
 
 	/*MyVector<const char*> v("Hello!");
 	v.add_element("Привет!");
@@ -75,5 +80,4 @@ int main()
 	else
 		cout << "Множество s1!=s3\n";*/
 	return 0;
-}
-
+};
