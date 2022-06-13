@@ -9,14 +9,6 @@ using namespace std;
 int main()
 {
 	setlocale(0, "russian");
-
-	MyVector<int> lol;
-	lol.add_element(10);
-	lol.add_element(7);
-	cout << lol;
-	lol.delete_element(7);
-	cout << lol;
-
 	
 
 	MyVector<const char*> v("Hello!");
