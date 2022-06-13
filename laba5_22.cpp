@@ -17,12 +17,9 @@ int main()
 	lol.delete_element(7);
 	cout << lol;
 
-	/*MySet<int> hui;
-	MySet<int> pizda;
-	hui.add_element(10);
-	hui.add_element(8);*/
+	
 
-	/*MyVector<const char*> v("Hello!");
+	MyVector<const char*> v("Hello!");
 	v.add_element("Привет!");
 	v.add_element("Привет!");
 	v.add_element("Привет!");
@@ -37,8 +34,8 @@ int main()
 	cout << "Вектор v1: " << v1 << endl;
 	for (int i = 0; i < MAX_SIZE; i++)
 		v1.delete_element(0);
-	cout << "Вектор v1: " << v1 << endl;*/
-	/*MySet<const char*>  s("Yes"), s1, s2;
+	cout << "Вектор v1: " << v1 << endl;
+	MySet<const char*>  s("Yes"), s1, s2;
 	s.add_element("Привет!");
 	s.add_element("No");
 	const char* str = "Hello!";
@@ -78,6 +75,6 @@ int main()
 	if (s1 == s3)
 		cout << "Множество s1=s3\n";
 	else
-		cout << "Множество s1!=s3\n";*/
+		cout << "Множество s1!=s3\n";
 	return 0;
 };
